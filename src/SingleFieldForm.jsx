@@ -16,7 +16,7 @@ const SingleFieldForm = () => {
       
       <TextInput
         style={styles.input}
-        placeholder="Enter somethin"
+        placeholder="Enter something"
         value={inputValue}
         onChangeText={setInputValue}
       />
