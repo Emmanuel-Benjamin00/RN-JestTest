@@ -1,0 +1,38 @@
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react-native';
+import SingleFieldForm from '../src/SingleFieldForm'; // Update with the correct path
+
+describe('SingleFieldForm', () => {
+  it('renders correctly', () => {
+    render(<SingleFieldForm />);
+    expect(screen.getByText('Simple Form')).toBeTruthy();
+    expect(screen.getByPlaceholderText('Enter something')).toBeTruthy();
+    expect(screen.getByText('Submit')).toBeTruthy();
+  });
+
+  it('updates input value on text change', () => {
+    render(<SingleFieldForm />);
+    const input = screen.getByPlaceholderText('Enter something');
+    fireEvent.changeText(input, 'Test input');
+    expect(input.props.value).toBe('Test input');
+  });
+
+  it('shows submitted value after form submission', () => {
+    render(<SingleFieldForm />);
+    const input = screen.getByPlaceholderText('Enter something');
+    fireEvent.changeText(input, 'Test input');
+    fireEvent.press(screen.getByText('Submit'));
+
+    expect(screen.getByText('Submitted Value: Test input')).toBeTruthy();
+  });
+
+  it('resets input field after submission', () => {
+    render(<SingleFieldForm />);
+    const input = screen.getByPlaceholderText('Enter something');
+    fireEvent.changeText(input, 'Test input');
+    fireEvent.press(screen.getByText('Submit'));
+
+    // After submission, the input field should be empty
+    expect(input.props.value).toBe('');
+  });
+});
